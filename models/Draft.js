@@ -55,6 +55,40 @@ class Draft {
     `;
 
     this.historyParent.insertAdjacentHTML('beforeend', historyHTML);
+
+    const btn = document.querySelectorAll('.question');
+
+    btn.forEach((el) => {
+      el.addEventListener('click', () => {
+        const modal = document.querySelector('.modal');
+        const qu = document.querySelector('.q');
+        const an = document.querySelector('.a');
+        const close = document.querySelector('.close');
+        const bod = document.querySelector('body');
+        const cont = document.querySelector('.cont');
+        const overlay = document.querySelector('.overlay');
+
+        modal.classList.remove('hidden');
+
+        qu.innerHTML = `${this.questionJSON}`;
+        an.innerHTML = `${this.answerJSON}`;
+        cont.href = `${this.continueReading}`;
+
+        close.addEventListener('click', () => {
+          modal.classList.add('hidden');
+        });
+
+        overlay.addEventListener('click', (e) => {
+          modal.classList.add('hidden');
+        });
+
+        bod.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            modal.classList.add('hidden');
+          }
+        });
+      });
+    });
   }
 
   renderContentLinks() {
