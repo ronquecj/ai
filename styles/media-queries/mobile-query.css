@@ -4,6 +4,11 @@
     width: 0%;
   }
 
+  /* main {
+    display: flex !important;
+    justify-content: center !important;
+  } */
+
   .maiden-container {
     width: 100%;
     border: none;
@@ -14,13 +19,25 @@
     width: 0%;
   }
 
+  .team-name {
+    font-size: 10px;
+  }
+
+  .desc-content {
+    font-size: 10px;
+  }
+
   .main-container {
-    margin-top: 200px !important;
+    margin-top: 250px !important;
   }
 
   .maiden {
-    font-size: 70px;
+    font-size: 60px;
     font-weight: 500;
+  }
+
+  .start {
+    font-size: 12px !important;
   }
 
   .bottom {
@@ -28,20 +45,23 @@
   }
 
   .barcode-container {
-    height: 10px !important;
+    color: #0f0f0f00;
+    height: 20px !important;
     width: 100% !important;
-    border-radius: 5px !important;
+    border-radius: 3px !important;
     margin-right: 15px;
+    margin-bottom: 10px !important;
     background-color: #ebebeb;
   }
 
-  .bottom-wrapper{
+  .bottom-wrapper {
     display: flex;
     flex-direction: column;
+    margin-top: 200px;
   }
 
   .start-container {
-    width: 35% !important;
+    width: 55% !important;
   }
 
   .history-content-container {
