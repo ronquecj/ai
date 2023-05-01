@@ -14,6 +14,36 @@
     width: 0%;
   }
 
+  .main-container {
+    margin-top: 200px !important;
+  }
+
+  .maiden {
+    font-size: 70px;
+    font-weight: 500;
+  }
+
+  .bottom {
+    width: 55% !important;
+  }
+
+  .barcode-container {
+    height: 10px !important;
+    width: 100% !important;
+    border-radius: 5px !important;
+    margin-right: 15px;
+    background-color: #ebebeb;
+  }
+
+  .bottom-wrapper{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .start-container {
+    width: 35% !important;
+  }
+
   .history-content-container {
     display: none;
   }
@@ -26,7 +56,7 @@
     width: 100%;
   }
 
-  .response{
+  .response {
     margin: 15px;
   }
 

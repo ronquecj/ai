@@ -89,16 +89,10 @@ btnSpeak.addEventListener('click', (e) => {
             aiResponseParent.firstElementChild
           );
         }
+
         if (historyParent.childElementCount > 9) {
           historyParent.removeChild(historyParent.firstElementChild);
         }
-        // if (historyParent.childElementCount > 0) {
-        //   const q = document.querySelector('.question');
-
-        //   q.addEventListener('click', (e) => {
-        //     console.log('test');
-        //   });
-        // }
 
         draft.renderContentAI();
         draft.renderContentHistory();
