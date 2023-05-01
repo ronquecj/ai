@@ -22,22 +22,29 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="app.css" />
-    <script src="app.js" type="module" defer></script>
-    <script src="Draft.js" type="module" defer></script>
+    <link rel="stylesheet" href="./../styles/app.css" />
+    <link
+      rel="stylesheet"
+      href="./../styles/media-queries/mobile-query.css"
+    />
+    <script src="./../app.js" type="module" defer></script>
+    <script src="./../models/Draft.js" type="module" defer></script>
     <title>Maiden | Voice Assistant</title>
   </head>
   <body>
     <main>
       <section class="header-container">
         <div class="history-container"><p>HISTORY</p></div>
-        <div class="maiden-container"><p>MAIDEN</p></div>
+        <div class="maiden-container">
+          <p>
+            <a href="./../index.html" class="maiden-link">MAIDEN</a>
+          </p>
+        </div>
         <div class="links-container"><p>LINKS</p></div>
       </section>
       <section class="content-container">
         <div class="history-content-container"></div>
-        <div class="ai-response-container">
-        </div>
+        <div class="ai-response-container"></div>
         <div class="link-content-container"></div>
       </section>
       <section class="footer-container">

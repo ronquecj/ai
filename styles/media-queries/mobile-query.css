@@ -1,0 +1,40 @@
+@media only screen and (max-width: 768px) {
+  .links-container {
+    display: none;
+    width: 0%;
+  }
+
+  .maiden-container {
+    width: 100%;
+    border: none;
+  }
+
+  .history-container {
+    display: none;
+    width: 0%;
+  }
+
+  .history-content-container {
+    display: none;
+  }
+
+  .link-content-container {
+    display: none;
+  }
+
+  .ai-response-container {
+    width: 100%;
+  }
+
+  .question-ai {
+    font-size: 20px;
+  }
+
+  .answer {
+    font-size: small;
+  }
+
+  .continue {
+    font-size: small;
+  }
+}

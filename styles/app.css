@@ -45,6 +45,11 @@ main {
   border-right: 1px solid #ebebeb;
 }
 
+.maiden-link {
+  text-decoration: none;
+  color: #ebebeb;
+}
+
 .links-container {
   display: flex;
   justify-content: center;

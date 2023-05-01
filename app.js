@@ -1,4 +1,4 @@
-import Draft from './Draft.js';
+import Draft from './models/Draft.js';
 
 const btnSpeak = document.querySelector('.speak');
 const aiResponseParent = document.querySelector(
