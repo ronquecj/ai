@@ -7,6 +7,7 @@ const aiResponseParent = document.querySelector(
 const historyParent = document.querySelector(
   '.history-content-container'
 );
+const draftCollections = [];
 
 let questionCounter = 1;
 
@@ -48,7 +49,6 @@ btnSpeak.addEventListener('click', (e) => {
 
     axios(config)
       .then((response) => {
-        console.log(response.data);
         return response.data;
       })
       .then((data) => {
@@ -81,8 +81,11 @@ btnSpeak.addEventListener('click', (e) => {
           resultData,
           questionCounter,
           data.organic[0].link,
-          linkStorage
+          linkStorage,
+          draftCollections
         );
+
+        draftCollections.push(draft);
 
         if (aiResponseParent.childElementCount > 2) {
           aiResponseParent.removeChild(

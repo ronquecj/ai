@@ -12,13 +12,15 @@ class Draft {
     answerJSON,
     qNumber,
     continueReading,
-    links = []
+    links = [],
+    draftCollections = []
   ) {
     this.questionJSON = questionJSON;
     this.answerJSON = answerJSON;
     this.qNumber = qNumber;
     this.continueReading = continueReading;
     this.links = links;
+    this.draftCollections = draftCollections;
   }
 
   renderContentAI() {
@@ -44,10 +46,10 @@ class Draft {
         <div class="q-number-container">
         <p class="q-number">Q${this.qNumber}</p>
         </div>
-        <div class="question-container" data-question="${
-          this.questionJSON
-        }">
-        <button class="question" >${this.questionJSON.slice(0, 45)}${
+        <div class="question-container">
+        <button class="question" data-n="${
+          this.qNumber - 1
+        }">${this.questionJSON.slice(0, 45)}${
       this.questionJSON.length > 45 ? '...' : ' '
     }</button>
         </div>
@@ -70,9 +72,15 @@ class Draft {
 
         modal.classList.remove('hidden');
 
-        qu.innerHTML = `${this.questionJSON}`;
-        an.innerHTML = `${this.answerJSON}`;
-        cont.href = `${this.continueReading}`;
+        an.innerHTML = `${
+          this.draftCollections[el.dataset.n].answerJSON
+        }`;
+        qu.innerHTML = `${
+          this.draftCollections[el.dataset.n].questionJSON
+        }`;
+        cont.href = `${
+          this.draftCollections[el.dataset.n].continueReading
+        }`;
 
         close.addEventListener('click', () => {
           modal.classList.add('hidden');
