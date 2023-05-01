@@ -26,11 +26,16 @@
     width: 100%;
   }
 
+  .response{
+    margin: 15px;
+  }
+
   .question-ai {
     font-size: 20px;
   }
 
   .answer {
+    margin: 0;
     font-size: small;
   }
 
