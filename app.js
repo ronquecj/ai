@@ -1,4 +1,7 @@
+'use strict';
+
 import Draft from './models/Draft.js';
+import LoadEvent from './utils/LoadEvent.js';
 
 const btnSpeak = document.querySelector('.speak');
 const aiResponseParent = document.querySelector(
@@ -7,64 +10,27 @@ const aiResponseParent = document.querySelector(
 const historyParent = document.querySelector(
   '.history-content-container'
 );
+
 const draftCollections = [];
 let greetings = 'Good';
-
 let questionCounter = 1;
+
+const loadEvent = new LoadEvent(speak, greetings);
+
+loadEvent.load();
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
-const speak = (sentence) => {
+function speak(sentence) {
   const text_speak = new SpeechSynthesisUtterance(sentence);
 
   text_speak.rate = 1;
   text_speak.pitch = 1;
 
   window.speechSynthesis.speak(text_speak);
-};
-
-window.addEventListener('load', () => {
-  const activatingM = 'Activating Maiden...';
-  const goingOL = 'Going online...';
-
-  var day = new Date();
-  var hr = day.getHours();
-
-  speak(activatingM);
-  speak(goingOL);
-
-  if (hr >= 0 && hr < 12) {
-    greetings = 'Good Morning';
-    speak(greetings);
-  } else if (hr == 12) {
-    greetings = 'Good Noon';
-    speak(greetings);
-  } else if (hr > 12 && hr <= 17) {
-    greetings = 'Good Afternoon';
-    speak(greetings);
-  } else {
-    greetings = 'Good Evening';
-    speak(greetings);
-  }
-
-  const aiResParent = document.querySelector(
-    '.ai-response-container'
-  );
-
-  const aiResHTML = `
-  <div class="response greet">
-     <p class="question-ai">
-     ${greetings}!
-     </p>
-     <p class="answer">
-     ${activatingM} ${goingOL}
-     </p>
- </div>
-  `;
-  aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
-});
+}
 
 btnSpeak.addEventListener('click', (e) => {
   e.preventDefault();
