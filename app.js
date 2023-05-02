@@ -8,6 +8,7 @@ const historyParent = document.querySelector(
   '.history-content-container'
 );
 const draftCollections = [];
+let greetings = 'Good';
 
 let questionCounter = 1;
 
@@ -23,6 +24,47 @@ const speak = (sentence) => {
 
   window.speechSynthesis.speak(text_speak);
 };
+
+window.addEventListener('load', () => {
+  const activatingM = 'Activating Maiden...';
+  const goingOL = 'Going online...';
+
+  var day = new Date();
+  var hr = day.getHours();
+
+  speak(activatingM);
+  speak(goingOL);
+
+  if (hr >= 0 && hr < 12) {
+    greetings = 'Good Morning';
+    speak(greetings);
+  } else if (hr == 12) {
+    greetings = 'Good Noon';
+    speak(greetings);
+  } else if (hr > 12 && hr <= 17) {
+    greetings = 'Good Afternoon';
+    speak(greetings);
+  } else {
+    greetings = 'Good Evening';
+    speak(greetings);
+  }
+
+  const aiResParent = document.querySelector(
+    '.ai-response-container'
+  );
+
+  const aiResHTML = `
+  <div class="response greet">
+     <p class="question-ai">
+     ${greetings}!
+     </p>
+     <p class="answer">
+     ${activatingM} ${goingOL}
+     </p>
+ </div>
+  `;
+  aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
+});
 
 btnSpeak.addEventListener('click', (e) => {
   e.preventDefault();
@@ -52,61 +94,107 @@ btnSpeak.addEventListener('click', (e) => {
         return response.data;
       })
       .then((data) => {
-        const linkParent = document.querySelector(
-          '.link-content-container'
-        );
-
-        while (linkParent.hasChildNodes()) {
-          linkParent.removeChild(linkParent.firstChild);
-        }
-
-        const resultData = `${JSON.stringify(
-          data.organic[0].snippet
-        )}${JSON.stringify(data.organic[1].snippet)}${JSON.stringify(
-          data.organic[2].snippet
-        )}`;
-
-        const linkStorage = [];
-
-        data.organic.forEach((element) => {
-          if (linkStorage.length < 10) {
-            linkStorage.push(element.link);
-          } else {
-            return;
-          }
-        });
-
-        const draft = new Draft(
-          transcript.toUpperCase(),
-          resultData,
-          questionCounter,
-          data.organic[0].link,
-          linkStorage,
-          draftCollections
-        );
-
-        draftCollections.push(draft);
-
-        if (aiResponseParent.childElementCount > 2) {
-          aiResponseParent.removeChild(
-            aiResponseParent.firstElementChild
+        if (transcript.includes('time')) {
+          const time = new Date().toLocaleString(undefined, {
+            hour: 'numeric',
+            minute: 'numeric',
+          });
+          const aiResParent = document.querySelector(
+            '.ai-response-container'
           );
-        }
 
-        if (historyParent.childElementCount > 9) {
-          historyParent.removeChild(historyParent.firstElementChild);
-        }
+          const aiResHTML = `
+          <div class="response greet">
+             <p class="question-ai">
+             ${transcript.toUpperCase()}
+             </p>
+             <p class="answer">
+             ${time}
+             </p>
+         </div>
+          `;
+          aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
+          speak(time);
+        } else if (transcript.includes('date')) {
+          const date = new Date().toLocaleString(undefined, {
+            month: 'short',
+            day: 'numeric',
+          });
+          const aiResParent = document.querySelector(
+            '.ai-response-container'
+          );
 
-        draft.renderContentAI();
-        draft.renderContentHistory();
-        draft.renderContentLinks();
+          const aiResHTML = `
+          <div class="response greet">
+             <p class="question-ai">
+             ${transcript.toUpperCase()}
+             </p>
+             <p class="answer">
+             ${date}
+             </p>
+         </div>
+          `;
+          aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
+          speak(date);
+        } else {
+          const linkParent = document.querySelector(
+            '.link-content-container'
+          );
 
-        if (
-          document.querySelector('.history-content-container')
-            .childElementCount > 0
-        ) {
-          speak(resultData);
-          questionCounter += 1;
+          while (linkParent.hasChildNodes()) {
+            linkParent.removeChild(linkParent.firstChild);
+          }
+
+          const resultData = `${JSON.stringify(
+            data.organic[0].snippet
+          )}${JSON.stringify(
+            data.organic[1].snippet
+          )}${JSON.stringify(data.organic[2].snippet)}`;
+
+          const linkStorage = [];
+
+          data.organic.forEach((element) => {
+            if (linkStorage.length < 10) {
+              linkStorage.push(element.link);
+            } else {
+              return;
+            }
+          });
+
+          const draft = new Draft(
+            transcript.toUpperCase(),
+            resultData,
+            questionCounter,
+            data.organic[0].link,
+            linkStorage,
+            draftCollections
+          );
+
+          draftCollections.push(draft);
+
+          if (aiResponseParent.childElementCount > 2) {
+            aiResponseParent.removeChild(
+              aiResponseParent.firstElementChild
+            );
+          }
+
+          if (historyParent.childElementCount > 9) {
+            historyParent.removeChild(
+              historyParent.firstElementChild
+            );
+          }
+
+          draft.renderContentAI();
+          draft.renderContentHistory();
+          draft.renderContentLinks();
+
+          if (
+            document.querySelector('.history-content-container')
+              .childElementCount > 0
+          ) {
+            speak(resultData);
+            questionCounter += 1;
+          }
         }
       })
       .catch((error) => {

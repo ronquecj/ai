@@ -39,7 +39,7 @@ class Draft {
     `;
     this.aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
   }
-
+  
   renderContentHistory() {
     const historyHTML = `
     <div class="history-content" >
