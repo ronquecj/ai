@@ -43,7 +43,6 @@ const handleViewportChange = (event) => {
   });
 
   if (event.matches) {
-    console.log('Viewport is smaller than 500px');
     aiContainer.style.width = '100%';
     linkContent.style.width = '0%';
     linkContent.style.display = 'none';
@@ -52,7 +51,6 @@ const handleViewportChange = (event) => {
 
     btnReturn.style.display = 'flex';
   } else {
-    console.log('Viewport is larger than 500px');
 
     aiContainer.classList.remove('hidden');
     btnReturn.style.display = 'none';
