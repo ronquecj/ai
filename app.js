@@ -2,6 +2,7 @@
 
 import Draft from './models/Draft.js';
 import LoadEvent from './utils/LoadEvent.js';
+import SpeakUtils from './utils/SpeakUtils.js';
 
 const btnSpeak = document.querySelector('.speak');
 const aiResponseParent = document.querySelector(
@@ -15,22 +16,14 @@ const draftCollections = [];
 let greetings = 'Good';
 let questionCounter = 1;
 
-const loadEvent = new LoadEvent(speak, greetings);
-
-loadEvent.load();
-
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const speakUtil = new SpeakUtils();
+const loadEvent = new LoadEvent(greetings);
 const recognition = new SpeechRecognition();
 
-function speak(sentence) {
-  const text_speak = new SpeechSynthesisUtterance(sentence);
-
-  text_speak.rate = 1.5;
-  text_speak.pitch = 1;
-
-  window.speechSynthesis.speak(text_speak);
-}
+loadEvent.load();
 
 btnSpeak.addEventListener('click', (e) => {
   e.preventDefault();
@@ -80,7 +73,7 @@ btnSpeak.addEventListener('click', (e) => {
          </div>
           `;
           aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
-          speak(time);
+          speakUtil.speak(time);
         } else if (transcript.includes('date')) {
           const date = new Date().toLocaleString(undefined, {
             month: 'short',
@@ -101,7 +94,7 @@ btnSpeak.addEventListener('click', (e) => {
          </div>
           `;
           aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
-          speak(date);
+          speakUtil.speak(date);
         } else {
           const linkParent = document.querySelector(
             '.link-content-container'
@@ -158,7 +151,7 @@ btnSpeak.addEventListener('click', (e) => {
             document.querySelector('.history-content-container')
               .childElementCount > 0
           ) {
-            speak(resultData);
+            speakUtil.speak(resultData);
             questionCounter += 1;
           }
         }

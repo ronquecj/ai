@@ -1,9 +1,10 @@
 'use strict';
+import SpeakUtils from './SpeakUtils.js';
 
 class LoadEvent {
-  constructor(func, greetings) {
-    this.func = func;
+  constructor(greetings) {
     this.greetings = greetings;
+    this.speakUtil = new SpeakUtils();
   }
 
   load() {
@@ -14,21 +15,21 @@ class LoadEvent {
       var day = new Date();
       var hr = day.getHours();
 
-      this.func(activatingM);
-      this.func(goingOL);
+      this.speakUtil.speak(activatingM);
+      this.speakUtil.speak(goingOL);
 
       if (hr >= 0 && hr < 12) {
         this.greetings = 'Good Morning';
-        this.func(this.greetings);
+        this.speakUtil.speak(this.greetings);
       } else if (hr == 12) {
         this.greetings = 'Good Noon';
-        this.func(this.greetings);
+        this.speakUtil.speak(this.greetings);
       } else if (hr > 12 && hr <= 17) {
         this.greetings = 'Good Afternoon';
-        this.func(this.greetings);
+        this.speakUtil.speak(this.greetings);
       } else {
         this.greetings = 'Good Evening';
-        this.func(this.greetings);
+        this.speakUtil.speak(this.greetings);
       }
 
       const aiResParent = document.querySelector(
