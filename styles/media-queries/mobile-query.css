@@ -1,7 +1,15 @@
 @media only screen and (max-width: 768px) {
+  .header-container {
+    font-size: 12px;
+  }
+
   .links-container {
-    display: none;
-    width: 0%;
+    /* display: none; */
+    width: 33.3%;
+  }
+
+  .h-btn {
+    font-size: 12px;
   }
 
   /* main {
@@ -10,13 +18,13 @@
   } */
 
   .maiden-container {
-    width: 100%;
+    width: 33.3%;
     border: none;
   }
 
   .history-container {
-    display: none;
-    width: 0%;
+    /* display: none; */
+    width: 33.3%;
   }
 
   .team-name {
@@ -71,7 +79,9 @@
   .link-content-container {
     display: none;
   }
-
+.link{
+  font-size: 11px;
+}
   .ai-response-container {
     width: 100%;
   }
@@ -80,16 +90,40 @@
     margin: 15px;
   }
 
+  .question{
+    font-size: 10px;
+  }
+
+  .modal-wrapper{
+    width: 70%;
+  }
+
+  .q{
+    font-size: 15px;
+  }
+
+  .a{
+    font-size: 9px;
+  }
+
+  .cont{
+    font-size: 9px;
+  }
+
+  .close{
+    font-size: 15px;
+  }
+
   .question-ai {
     font-size: 20px;
   }
 
   .answer {
     margin: 0;
-    font-size: small;
+    font-size: 10px;
   }
 
   .continue {
-    font-size: small;
+    font-size: 10px;
   }
 }
