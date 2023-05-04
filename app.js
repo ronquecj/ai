@@ -1,8 +1,10 @@
 'use strict';
 
 import Draft from './models/Draft.js';
+import Continue from './models/Continue.js';
 import LoadEvent from './utils/LoadEvent.js';
 import SpeakUtils from './utils/SpeakUtils.js';
+import ParentLimit from './utils/ParentLimit.js';
 
 const btnSpeak = document.querySelector('.speak');
 const aiResponseParent = document.querySelector(
@@ -13,14 +15,17 @@ const historyParent = document.querySelector(
 );
 
 const draftCollections = [];
+const continueCollections = [];
 let greetings = 'Good';
 let questionCounter = 1;
+let continueCounter = 0;
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const speakUtil = new SpeakUtils();
 const loadEvent = new LoadEvent(greetings);
+const parentUtil = new ParentLimit(aiResponseParent);
 const recognition = new SpeechRecognition();
 
 loadEvent.load();
@@ -54,6 +59,7 @@ btnSpeak.addEventListener('click', (e) => {
       })
       .then((data) => {
         if (transcript.includes('time')) {
+          parentUtil.limit();
           const time = new Date().toLocaleString(undefined, {
             hour: 'numeric',
             minute: 'numeric',
@@ -68,13 +74,14 @@ btnSpeak.addEventListener('click', (e) => {
              ${transcript.toUpperCase()}
              </p>
              <p class="answer">
-             ${time}
+             The current time right now is ${time}
              </p>
          </div>
           `;
           aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
-          speakUtil.speak(time);
+          speakUtil.speak(`The current time right now is ${time}`);
         } else if (transcript.includes('date')) {
+          parentUtil.limit();
           const date = new Date().toLocaleString(undefined, {
             month: 'short',
             day: 'numeric',
@@ -89,12 +96,93 @@ btnSpeak.addEventListener('click', (e) => {
              ${transcript.toUpperCase()}
              </p>
              <p class="answer">
-             ${date}
+             Today is ${date}
              </p>
          </div>
           `;
           aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
-          speakUtil.speak(date);
+          speakUtil.speak(`Today is ${date}`);
+        } else if (transcript.includes('go offline')) {
+          parentUtil.limit();
+          const offline =
+            'Maiden is shutting down... Closing window in a few second... Maiden going offline...';
+          const aiResParent = document.querySelector(
+            '.ai-response-container'
+          );
+
+          const aiResHTML = `
+          <div class="response greet">
+             <p class="question-ai">
+             ${transcript.toUpperCase()}
+             </p>
+             <p class="answer">
+             ${offline}
+             </p>
+         </div>
+          `;
+          aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
+          speakUtil.speak(offline);
+
+          setTimeout(() => {
+            document.querySelector('.maiden-link').click();
+          }, 7000);
+        } else if (transcript.includes('clear chat')) {
+          const clearChat = 'Clearing things up for you...';
+          const aiResParent = document.querySelector(
+            '.ai-response-container'
+          );
+
+          const aiResHTML = `
+          <div class="response greet">
+             <p class="question-ai">
+             ${transcript.toUpperCase()}
+             </p>
+             <p class="answer">
+             ${clearChat}
+             </p>
+         </div>
+          `;
+          aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
+          speakUtil.speak(clearChat);
+
+          setTimeout(() => {
+            while (aiResponseParent.hasChildNodes()) {
+              if (aiResponseParent.childElementCount == 0) {
+                return;
+              }
+              aiResponseParent.removeChild(
+                aiResponseParent.firstChild
+              );
+            }
+          }, 3000);
+        } else if (transcript.includes('continue')) {
+          console.log(continueCollections);
+          continueCounter -= 1;
+          console.log(continueCounter);
+          const continueTemplate = [
+            ...continueCollections[continueCounter].previousData,
+          ];
+
+          parentUtil.limit();
+          const result =
+            'Here is another result for your previous question';
+          const aiResParent = document.querySelector(
+            '.ai-response-container'
+          );
+
+          const aiResHTML = `
+          <div class="response greet">
+             <p class="question-ai">
+             ${transcript.toUpperCase()}
+             </p>
+             <p class="answer">
+             ${result}, ${continueTemplate}
+             </p>
+         </div>
+          `;
+          aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
+          speakUtil.speak(`${result}${continueTemplate}`);
+          continueCounter += 1;
         } else {
           const linkParent = document.querySelector(
             '.link-content-container'
@@ -129,13 +217,16 @@ btnSpeak.addEventListener('click', (e) => {
             draftCollections
           );
 
-          draftCollections.push(draft);
+          const continueData = new Continue([
+            JSON.stringify(data.organic[4].snippet),
+            JSON.stringify(data.organic[5].snippet),
+            JSON.stringify(data.organic[6].snippet),
+          ]);
 
-          if (aiResponseParent.childElementCount > 2) {
-            aiResponseParent.removeChild(
-              aiResponseParent.firstElementChild
-            );
-          }
+          draftCollections.push(draft);
+          continueCollections.push(continueData);
+
+          parentUtil.limit();
 
           if (historyParent.childElementCount > 9) {
             historyParent.removeChild(
@@ -146,6 +237,8 @@ btnSpeak.addEventListener('click', (e) => {
           draft.renderContentAI();
           draft.renderContentHistory();
           draft.renderContentLinks();
+
+          continueCounter += 1;
 
           if (
             document.querySelector('.history-content-container')

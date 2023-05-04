@@ -79,9 +79,9 @@
   .link-content-container {
     display: none;
   }
-.link{
-  font-size: 11px;
-}
+  .link {
+    font-size: 11px;
+  }
   .ai-response-container {
     width: 100%;
   }
@@ -90,27 +90,27 @@
     margin: 15px;
   }
 
-  .question{
+  .question {
     font-size: 10px;
   }
 
-  .modal-wrapper{
+  .modal-wrapper {
     width: 70%;
   }
 
-  .q{
+  .q {
     font-size: 15px;
   }
 
-  .a{
+  .a {
     font-size: 9px;
   }
 
-  .cont{
+  .cont {
     font-size: 9px;
   }
 
-  .close{
+  .close {
     font-size: 15px;
   }
 
@@ -125,5 +125,51 @@
 
   .continue {
     font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 700px) {
+  .link {
+    font-size: 9px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .link {
+    font-size: 11px;
+  }
+
+  .question-ai {
+    font-size: 25px;
+  }
+
+  .answer {
+    font-size: 12px;
+  }
+
+  .question {
+    font-size: 12px;
+  }
+
+  .q-number {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  .question-ai {
+    font-size: 30px;
+  }
+
+  .answer {
+    font-size: 15px;
+  }
+
+  .link {
+    font-size: 15px;
+  }
+
+  .question{
+    font-size: 15px;
   }
 }

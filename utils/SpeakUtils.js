@@ -6,7 +6,7 @@ class SpeakUtils {
   speak(sentence) {
     const text_speak = new SpeechSynthesisUtterance(sentence);
 
-    text_speak.rate = 1.5;
+    text_speak.rate = 1;
     text_speak.pitch = 1;
 
     window.speechSynthesis.speak(text_speak);

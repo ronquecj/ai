@@ -1,6 +1,7 @@
 'use strict';
 
-const mediaQuery = window.matchMedia('(max-width: 500px)');
+const mediaQuery = window.matchMedia('(max-width: 700px)');
+
 const btnHistory = document.querySelector('.history-btn');
 const btnLink = document.querySelector('.link-btn');
 const btnReturn = document.querySelector('.btn-return');
@@ -13,7 +14,6 @@ const linkContent = document.querySelector('.link-content-container');
 
 const handleViewportChange = (event) => {
   btnReturn.addEventListener('click', (e) => {
-    console.log('test');
     aiContainer.classList.remove('hidden');
     aiContainer.style.width = '100%';
     linkContent.style.width = '0%';
@@ -48,7 +48,6 @@ const handleViewportChange = (event) => {
     linkContent.style.display = 'none';
     historyContent.style.width = '0%';
     historyContent.style.display = 'none';
-
     btnReturn.style.display = 'flex';
   } else {
 
