@@ -1,7 +1,7 @@
 'use strict';
 
 class Draft {
-  aiResParent = document.querySelector('.ai-response-container');
+  aiResParent = document.querySelector('.response-parent');
   historyParent = document.querySelector(
     '.history-content-container'
   );

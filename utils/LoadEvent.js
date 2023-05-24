@@ -33,7 +33,7 @@ class LoadEvent {
       }
 
       const aiResParent = document.querySelector(
-        '.ai-response-container'
+        '.response-parent'
       );
 
       const aiResHTML = `

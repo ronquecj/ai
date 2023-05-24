@@ -8,11 +8,13 @@ import ParentLimit from './utils/ParentLimit.js';
 
 const btnSpeak = document.querySelector('.speak');
 const aiResponseParent = document.querySelector(
-  '.ai-response-container'
+  '.response-parent'
 );
 const historyParent = document.querySelector(
   '.history-content-container'
 );
+
+const btnStop = document.querySelector('.stop-generating')
 
 const draftCollections = [];
 const continueCollections = [];
@@ -47,7 +49,7 @@ btnSpeak.addEventListener('click', (e) => {
       method: 'post',
       url: 'https://google.serper.dev/search/',
       headers: {
-        'X-API-KEY': '36c563478ef01222a9ea9ede32eeeef2814ffa46',
+        'X-API-KEY': 'aa095710e8068cabfa85aa0340f66390ebc4c0f9',
         'Content-Type': 'application/json',
       },
       data: data,
@@ -65,7 +67,7 @@ btnSpeak.addEventListener('click', (e) => {
             minute: 'numeric',
           });
           const aiResParent = document.querySelector(
-            '.ai-response-container'
+            '.response-parent'
           );
 
           const aiResHTML = `
@@ -87,7 +89,7 @@ btnSpeak.addEventListener('click', (e) => {
             day: 'numeric',
           });
           const aiResParent = document.querySelector(
-            '.ai-response-container'
+            '.response-parent'
           );
 
           const aiResHTML = `
@@ -107,7 +109,7 @@ btnSpeak.addEventListener('click', (e) => {
           const offline =
             'Maiden is shutting down... Closing window in a few second... Maiden going offline...';
           const aiResParent = document.querySelector(
-            '.ai-response-container'
+            '.response-parent'
           );
 
           const aiResHTML = `
@@ -129,7 +131,7 @@ btnSpeak.addEventListener('click', (e) => {
         } else if (transcript.includes('clear chat')) {
           const clearChat = 'Clearing things up for you...';
           const aiResParent = document.querySelector(
-            '.ai-response-container'
+            '.response-parent'
           );
 
           const aiResHTML = `
@@ -165,9 +167,9 @@ btnSpeak.addEventListener('click', (e) => {
 
           parentUtil.limit();
           const result =
-            'Here is another result for your previous question';
+            'Here is another result for your previous question, ' + `${continueTemplate}`;
           const aiResParent = document.querySelector(
-            '.ai-response-container'
+            '.response-parent'
           );
 
           const aiResHTML = `
@@ -176,12 +178,12 @@ btnSpeak.addEventListener('click', (e) => {
              ${transcript.toUpperCase()}
              </p>
              <p class="answer">
-             ${result}, ${continueTemplate}
+             ${result}
              </p>
          </div>
           `;
           aiResParent.insertAdjacentHTML('beforeend', aiResHTML);
-          speakUtil.speak(`${result}${continueTemplate}`);
+          speakUtil.speak(`${result}`);
           continueCounter += 1;
         } else {
           const linkParent = document.querySelector(
@@ -255,3 +257,10 @@ btnSpeak.addEventListener('click', (e) => {
     //#endregion
   };
 });
+
+
+
+btnStop.addEventListener('click',(e)=>{
+  e.preventDefault();
+  window.speechSynthesis.cancel()
+})
